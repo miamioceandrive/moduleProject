@@ -204,7 +204,12 @@ function renderHero() {
     const btn = createLink("Join Meetup", "btn", "events.html");
     content.append(title, text, btn);
 
-    inner.append(content, createImage(HERO_IMAGE, "hero__image"));
+    // На мобилке кнопка Join Meetup скрыта — переход на страницу ивентов по клику на картинку
+    const imageLink = createLink("", "hero__image-link", "events.html");
+    imageLink.setAttribute("aria-label", "Join Meetup");
+    imageLink.append(createImage(HERO_IMAGE, "hero__image"));
+
+    inner.append(content, imageLink);
     hero.append(inner);
 }
 
@@ -246,7 +251,7 @@ function createEventCard(event) {
     return card;
 }
 
-// sectionId — id секции в html
+// sectionId 
 function renderEvents({ sectionId, title: titleText, events, location: locationText }) {
     const section = document.getElementById(sectionId);
     const inner = createElement("div", "container");

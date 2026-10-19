@@ -233,6 +233,13 @@ img {
     object-fit: contain;
 }
 
+/* Ссылка на картинке работает только на мобилке, на десктопе для этого есть кнопка */
+.hero__image-link {
+    display: block;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
 .hero__image.placeholder {
     height: 280px;
 }
@@ -583,7 +590,7 @@ img {
     border-radius: var(--radius);
 }
 
-/* Текст карточки — только для мобильной версии */
+/* Текст карточки — только для мобилки */
 .friendship-card__body {
     display: none;
 }
@@ -825,12 +832,14 @@ img {
         margin-bottom: 0;
     }
 
+    /* Кнопки нет — на страницу ивентов ведёт картинка */
     .hero__content .btn {
         display: none;
     }
 
-    .hero__image {
+    .hero__image-link {
         align-self: center;
+        pointer-events: auto;
     }
 
     /* Events */

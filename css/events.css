@@ -148,7 +148,7 @@
     overflow: hidden;
 }
 
-/* Карта приглушена и не реагирует на мышь, как превью в макете */
+/* Карта */
 .map-card__image {
     display: block;
     width: 100%;
@@ -193,7 +193,40 @@
     font-size: 18px;
 }
 
+/* На этой странице футер не наезжает на контент (нахлёст только на главной) */
+.footer {
+    margin-top: 0;
+}
+
 /* ---------- Адаптив ---------- */
+/* Планшет: десктопная раскладка (список слева, карта справа), но компактнее */
+@media (max-width: 1024px) {
+    .search-page {
+        padding-top: 40px;
+    }
+
+    .search-page__inner {
+        gap: 32px;
+    }
+
+    /* список той же ширины, что на десктопе (480px), сжимается только если не влезает */
+    .search-page__content {
+        min-width: 0;
+    }
+
+    .search-page__title {
+        font-size: 22px;
+    }
+
+    .map-card {
+        width: 240px;
+    }
+
+    .map-card__image {
+        height: 200px;
+    }
+}
+
 @media (max-width: 768px) {
     .search-page {
         padding-top: 30px;

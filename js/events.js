@@ -166,3 +166,4 @@ function renderSearchPage() {
 
 renderHeader();
 renderSearchPage();
+renderFooter(footerData);
