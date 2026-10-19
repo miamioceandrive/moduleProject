@@ -61,7 +61,6 @@ img {
     padding: 0 20px;
 }
 
-/* Заглушки под картинки и иконки */
 .placeholder {
     background: var(--color-placeholder);
 }
@@ -336,7 +335,7 @@ img {
     margin-right: 12px;
 }
 
-/* Элементы только для мобильной версии */
+/* Элементы для мобильной версии */
 .event-card__online,
 .event-card__attendees {
     display: none;
@@ -434,7 +433,7 @@ img {
     background: var(--color-bg-soft);
 }
 
-/* ограничиваем ширину, чтобы названия переносились одинаково, как в макете */
+/* ограничиваем ширину, чтобы названия переносились одинаково */
 .category-card__title {
     max-width: 95px;
 }
@@ -547,7 +546,7 @@ img {
 }
 
 /* ---------- Friendships ---------- */
-/* картинки уходят под футер, как в макете */
+
 .friendships {
     padding-bottom: 0;
 }
@@ -764,7 +763,6 @@ img {
 }
 
 @media (max-width: 768px) {
-    /* Header: логотип и меню в первой строке, поиск во второй */
     .header__inner {
         flex-wrap: wrap;
         row-gap: 12px;
@@ -806,7 +804,7 @@ img {
         width: 50px;
     }
 
-    /* Hero: текст сверху, картинка по центру снизу */
+    /* Hero */
     .hero {
         padding: 30px 0 50px;
     }
@@ -835,7 +833,7 @@ img {
         align-self: center;
     }
 
-    /* Events: список, картинка слева, текст справа */
+    /* Events */
     .events {
         padding-bottom: 40px;
     }
@@ -930,7 +928,7 @@ img {
         color: var(--color-text-muted);
     }
 
-    /* Join Meetup: заголовок, картинка, текст, кнопка по центру */
+    /* Join Meetup */
     .join {
         padding-bottom: 20px;
     }
@@ -970,7 +968,7 @@ img {
         min-width: 175px;
     }
 
-    /* Categories: 2 колонки, карточки крупнее */
+    /* Categories */
     .categories__list {
         grid-template-columns: repeat(2, 1fr);
         gap: 22px;
@@ -983,7 +981,7 @@ img {
         justify-content: flex-start;
     }
 
-    /* Popular cities: 2 колонки, 4 города (Miami скрыт, как в макете) */
+    /* Popular cities */
     .cities {
         padding-bottom: 50px;
     }
@@ -1010,7 +1008,7 @@ img {
         display: none;
     }
 
-    /* How Meetup works: карточки в колонку, текст мельче */
+    /* How Meetup works */
     .how-works__list {
         gap: 16px;
     }
@@ -1038,7 +1036,7 @@ img {
         font-size: 13px;
     }
 
-    /* Friendships: карточки с текстом, без вводного абзаца и нахлёста футера */
+    /* Friendships */
     .friendships {
         padding-bottom: 40px;
     }
@@ -1083,7 +1081,7 @@ img {
         text-decoration: underline;
     }
 
-    /* Footer: 3 колонки остаются, без бейджей приложений и нижних ссылок */
+    /* Footer */
     .footer {
         margin-top: 0;
         padding: 20px 0 30px;
