@@ -824,6 +824,7 @@ img {
 
     .hero__title {
         font-size: 30px;
+        margin-bottom: 0;
     }
 
     .hero__text {
@@ -832,14 +833,22 @@ img {
         margin-bottom: 0;
     }
 
-    /* Кнопки нет — на страницу ивентов ведёт картинка */
-    .hero__content .btn {
-        display: none;
+    /* Порядок: текст, картинка, кнопка по центру под картинкой */
+    .hero__content {
+        display: contents;
     }
 
     .hero__image-link {
+        order: 1;
         align-self: center;
         pointer-events: auto;
+    }
+
+    .hero__content .btn {
+        order: 2;
+        align-self: center;
+        padding: 14px 32px;
+        font-size: 18px;
     }
 
     /* Events */

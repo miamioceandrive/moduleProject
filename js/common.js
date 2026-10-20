@@ -19,7 +19,7 @@ const footerData = {
             links: ["About", "Blog", "Meetup Pro", "Careers", "Apps", "Podcast"],
         },
     ],
-    // icon — класс иконки Font Awesome (fa-brands)
+    // icons
     socials: [
         { name: "Facebook", icon: "fa-facebook" },
         { name: "Twitter", icon: "fa-twitter" },
@@ -49,7 +49,7 @@ function createElement(tag, className, text) {
     return el;
 }
 
-// Иконка: если путь задан — <img>, иначе заглушка
+// Icons
 function createIcon(src, className = "icon") {
     if (src) {
         const img = createElement("img", className);
@@ -60,12 +60,12 @@ function createIcon(src, className = "icon") {
     return createElement("span", `${className} placeholder`);
 }
 
-// Иконка из Google Material Symbols
+// Icons from Google Material Symbols
 function createMaterialIcon(name, className = "") {
     return createElement("span", `material-symbols-outlined ${className}`.trim(), name);
 }
 
-// Картинка
+// Image
 function createImage(src, className, alt = "") {
     if (src) {
         const img = createElement("img", className);

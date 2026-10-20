@@ -1,4 +1,4 @@
-// ---------- Данные ----------
+
 
 const CITY = "New York, NY";
 // Карта OpenStreetMap 
@@ -85,6 +85,13 @@ function createEventRow(event) {
         createElement("h3", "event-row__title", event.title),
         createElement("p", "event-row__category", categoryText)
     );
+
+    // Строка «Online Event» — видна только в мобильной версии
+    if (event.type === "online") {
+        const online = createElement("p", "event-row__online");
+        online.append(createMaterialIcon("videocam"), createElement("span", "", "Online Event"));
+        info.append(online);
+    }
 
     row.append(createImage(event.image, "event-row__image", event.title), info);
 
