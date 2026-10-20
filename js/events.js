@@ -4,10 +4,40 @@ const CITY = "New York, NY";
 // Карта OpenStreetMap 
 const MAP_URL = "https://www.openstreetmap.org/export/embed.html?bbox=-74.03,40.69,-73.93,40.79&layer=mapnik";
 
-// Фильтры над списком (пока без логики)
-const filtersData = ["Any type", "Any distance", "Any category"];
+// Фильтры: key — по какому полю фильтруем, value "" — без фильтра
+const filtersData = [
+    {
+        key: "type",
+        options: [
+            { value: "", label: "Any type" },
+            { value: "online", label: "Online" },
+            { value: "offline", label: "In person" },
+        ],
+    },
+    {
+        key: "distance",
+        options: [
+            { value: "", label: "Any distance" },
+            { value: "5", label: "Within 5 km" },
+            { value: "10", label: "Within 10 km" },
+            { value: "25", label: "Within 25 km" },
+            { value: "50", label: "Within 50 km" },
+        ],
+    },
+    {
+        key: "category",
+        options: [
+            { value: "", label: "Any category" },
+            { value: "Hobbies and Passions", label: "Hobbies and Passions" },
+            { value: "Technology", label: "Technology" },
+        ],
+    },
+];
 
-// type: "online" | "offline"; distance — км или null; attendees, spotsLeft — необязательные
+// Текущие значения фильтров
+const activeFilters = { type: "", distance: "", category: "" };
+
+// type: "online" | "offline"; distance; attendees, spotsLeft
 const searchEventsData = [
     {
         title: "All Nations - Manhattan Missions Church Bible Study",
@@ -108,14 +138,50 @@ function createEventRow(event) {
 
     return row;
 }
+// Фильтрация: функция filterEvents(). Она проходит по всем ивентам через .filter() и оставляет только подходящие под все три условия:
+function filterEvents(events) {
+    return events.filter((event) => {
+        const { type, distance, category } = activeFilters; // Здесь хранится, что сейчас выбрано в каждом списке.
+        if (type && event.type !== type) return false; //  если фильтр пустой ("" считается ложью), проверка пропускается;
+        //return false — ивент выкидывается, return true — остаётся;
+//дистанция в списке хранится строкой ("25"), поэтому Number(distance) переводит её в число для сравнения
+        // у онлайн-ивентов нет расстояния — при выбранной дистанции они не показываются
+        if (distance && (event.distance === null || event.distance > Number(distance))) return false;
+        if (category && event.category !== category) return false;
+        return true;
+    });
+}
 
+function renderEventList() {
+    const list = document.getElementById("event-rows"); // Находит контейнер списка по id="event-rows"
+    list.innerHTML = ""; //Очищает его: list.innerHTML = ""
+    //Получает отфильтрованные ивенты
+    const events = filterEvents(searchEventsData);
+    if (events.length === 0) {
+        list.append(createElement("p", "event-rows__empty", "No events found. Try changing the filters."));
+        return; //Если их нет, выводит «No events found»
+    }
+    events.forEach((event) => list.append(createEventRow(event))); // если нет, то создает карточку для каждого ивента и добавляет её в контейнер
+}
+// Для каждого фильтра функция createFilters создаёт <select> с вариантами <option>. На каждый select вешается обработчик change
 function createFilters(filters) {
     const wrap = createElement("div", "filters");
-    filters.forEach((text) => {
-        const btn = createElement("button", "filters__btn");
-        btn.type = "button";
-        btn.append(createElement("span", "", text), createMaterialIcon("expand_more", "filters__icon"));
-        wrap.append(btn);
+    filters.forEach((filter) => {
+        const label = createElement("label", "filters__btn");
+        const select = createElement("select", "filters__select");
+        filter.options.forEach((option) => {
+            const opt = createElement("option", "", option.label);
+            opt.value = option.value;
+            select.append(opt);
+        });
+        //
+        select.addEventListener("change", () => {
+            activeFilters[filter.key] = select.value;
+            renderEventList();
+        });
+
+        label.append(select, createMaterialIcon("expand_more", "filters__icon"));
+        wrap.append(label);
     });
     return wrap;
 }
@@ -144,6 +210,14 @@ function createMapCard() {
     frame.loading = "lazy";
     frame.tabIndex = -1;
 
+    // Browse in map — включает живую карту, крестик — возвращает превью
+    function setMapActive(active) {
+        map.classList.toggle("map-card__map--active", active);
+        frame.tabIndex = active ? 0 : -1;
+    }
+    browse.addEventListener("click", () => setMapActive(true));
+    close.addEventListener("click", () => setMapActive(false));
+
     map.append(frame, close, browse);
     aside.append(label, city, map);
     return aside;
@@ -162,11 +236,13 @@ function renderSearchPage() {
     tabs.append(createLink("Events", "tabs__item tabs__item--active"));
 
     const list = createElement("div", "event-rows");
-    searchEventsData.forEach((event) => list.append(createEventRow(event)));
+    list.id = "event-rows";
 
     content.append(title, tabs, createFilters(filtersData), list);
     inner.append(content, createMapCard());
     page.append(inner);
+
+    renderEventList();
 }
 
 // ---------- Init ----------
