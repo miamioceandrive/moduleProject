@@ -1,7 +1,7 @@
-
+// ---------- Данные ----------
 
 const CITY = "New York, NY";
-// Карта OpenStreetMap 
+// Карта OpenStreetMap. bbox — границы области: запад, юг, восток, север
 const MAP_URL = "https://www.openstreetmap.org/export/embed.html?bbox=-74.03,40.69,-73.93,40.79&layer=mapnik";
 
 // Фильтры: key — по какому полю фильтруем, value "" — без фильтра
@@ -37,7 +37,7 @@ const filtersData = [
 // Текущие значения фильтров
 const activeFilters = { type: "", distance: "", category: "" };
 
-// type: "online" | "offline"; distance; attendees, spotsLeft
+// type: "online" | "offline"; distance — км или null; attendees, spotsLeft — необязательные
 const searchEventsData = [
     {
         title: "All Nations - Manhattan Missions Church Bible Study",
@@ -138,32 +138,36 @@ function createEventRow(event) {
 
     return row;
 }
-// Фильтрация: функция filterEvents(). Она проходит по всем ивентам через .filter() и оставляет только подходящие под все три условия:
+
+// ---------- Фильтрация ----------
+
+// Оставляет только ивенты, подходящие под все выбранные фильтры.
+// Пустой фильтр ("") пропускается, return false — ивент выкидывается.
 function filterEvents(events) {
     return events.filter((event) => {
-        const { type, distance, category } = activeFilters; // Здесь хранится, что сейчас выбрано в каждом списке.
-        if (type && event.type !== type) return false; //  если фильтр пустой ("" считается ложью), проверка пропускается;
-        //return false — ивент выкидывается, return true — остаётся;
-//дистанция в списке хранится строкой ("25"), поэтому Number(distance) переводит её в число для сравнения
-        // у онлайн-ивентов нет расстояния — при выбранной дистанции они не показываются
+        const { type, distance, category } = activeFilters;
+        if (type && event.type !== type) return false;
+        // distance в select — строка, поэтому Number(); у онлайн-ивентов расстояния нет (null)
         if (distance && (event.distance === null || event.distance > Number(distance))) return false;
         if (category && event.category !== category) return false;
         return true;
     });
 }
 
+// Очищает список и рисует заново только отфильтрованные ивенты
 function renderEventList() {
-    const list = document.getElementById("event-rows"); // Находит контейнер списка по id="event-rows"
-    list.innerHTML = ""; //Очищает его: list.innerHTML = ""
-    //Получает отфильтрованные ивенты
+    const list = document.getElementById("event-rows");
+    list.innerHTML = "";
+
     const events = filterEvents(searchEventsData);
     if (events.length === 0) {
         list.append(createElement("p", "event-rows__empty", "No events found. Try changing the filters."));
-        return; //Если их нет, выводит «No events found»
+        return;
     }
-    events.forEach((event) => list.append(createEventRow(event))); // если нет, то создает карточку для каждого ивента и добавляет её в контейнер
+    events.forEach((event) => list.append(createEventRow(event)));
 }
-// Для каждого фильтра функция createFilters создаёт <select> с вариантами <option>. На каждый select вешается обработчик change
+
+// Для каждого фильтра создаёт <select>; при выборе запоминает значение и перерисовывает список
 function createFilters(filters) {
     const wrap = createElement("div", "filters");
     filters.forEach((filter) => {
@@ -174,7 +178,7 @@ function createFilters(filters) {
             opt.value = option.value;
             select.append(opt);
         });
-        //
+
         select.addEventListener("change", () => {
             activeFilters[filter.key] = select.value;
             renderEventList();

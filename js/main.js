@@ -1,7 +1,4 @@
-
-// У ивентов online: true — ивент онлайн (на мобилке выводится строка Online Event)
-
-
+// ---------- Данные ----------
 
 const HERO_IMAGE = "assets/images/headImg.png";
 const JOIN_IMAGE = "assets/images/joinMeetup.png";
@@ -62,6 +59,7 @@ const friendshipsData = [
 
 
 
+// online: true — ивент онлайн (на мобилке выводится строка «Online Event»)
 const eventsData = [
     {
         title: "Day Trading Idea and Strategy",
@@ -204,7 +202,7 @@ function renderHero() {
     const btn = createLink("Join Meetup", "btn", "events.html");
     content.append(title, text, btn);
 
-    // На мобилке кнопка Join Meetup скрыта — переход на страницу ивентов по клику на картинку// добавлена кнопка, переход возможен по кнопке или ссылка картинка
+    // На мобилке на страницу ивентов ведут и кнопка, и картинка
     const imageLink = createLink("", "hero__image-link", "events.html");
     imageLink.setAttribute("aria-label", "Join Meetup");
     imageLink.append(createImage(HERO_IMAGE, "hero__image"));
@@ -251,7 +249,7 @@ function createEventCard(event) {
     return card;
 }
 
-// sectionId 
+// sectionId — id секции в html, location — город рядом с заголовком (необязательно)
 function renderEvents({ sectionId, title: titleText, events, location: locationText }) {
     const section = document.getElementById(sectionId);
     const inner = createElement("div", "container");
@@ -321,7 +319,7 @@ function renderCategories(categories) {
     const section = document.getElementById("categories");
     const inner = createElement("div", "container");
 
-    const title = createElement("h2", "categories__title", "Explore top categories");
+    const title = createElement("h2", "section-title", "Explore top categories");
     const list = createElement("div", "categories__list");
     categories.forEach((category) => list.append(createCategoryCard(category)));
 

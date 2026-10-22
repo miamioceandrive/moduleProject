@@ -65,18 +65,6 @@ img {
     background: var(--color-placeholder);
 }
 
-.icon {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    object-fit: contain;
-}
-
-.icon.placeholder {
-    border-radius: 4px;
-}
-
 /* Material Symbols */
 .m-icon {
     font-size: 18px;
@@ -302,7 +290,6 @@ img {
 }
 
 .event-card__media {
-    position: relative;
     margin-bottom: 12px;
 }
 
@@ -406,12 +393,6 @@ img {
 /* ---------- Categories ---------- */
 .categories {
     padding-bottom: 80px;
-}
-
-.categories__title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 24px;
 }
 
 .categories__list {
@@ -603,11 +584,6 @@ img {
     background: #212121;
     color: #fff;
     padding: 16px 0 32px;
-}
-
-
-.footer .placeholder {
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .footer__top {
