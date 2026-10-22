@@ -204,7 +204,7 @@ function renderHero() {
     const btn = createLink("Join Meetup", "btn", "events.html");
     content.append(title, text, btn);
 
-    // На мобилке кнопка Join Meetup скрыта — переход на страницу ивентов по клику на картинку
+    // На мобилке кнопка Join Meetup скрыта — переход на страницу ивентов по клику на картинку// добавлена кнопка, переход возможен по кнопке или ссылка картинка
     const imageLink = createLink("", "hero__image-link", "events.html");
     imageLink.setAttribute("aria-label", "Join Meetup");
     imageLink.append(createImage(HERO_IMAGE, "hero__image"));
